@@ -1,73 +1,46 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by Fernflower decompiler)
-//
-
 package com.postprovider.web.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(
-        collection = "Post"
-)
+@Document(collection = "Post")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Post implements Serializable {
     @Id
     @NotNull
     private String id;
+
     @NotBlank
     private String provider_id;
     private String name;
 
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        } else if (!(o instanceof Post)) {
-            return false;
-        } else {
-            Post post = (Post)o;
-            return this.id.equals(post.id) && this.provider_id.equals(post.provider_id) && this.name.equals(post.name);
-        }
-    }
+    private String serviceType;
 
-    public int hashCode() {
-        return Objects.hash(new Object[]{this.id});
-    }
+    private Double latitude;
+    private Double longitude;
+    private String address;
+    private String postalCode;
 
-    public String getId() {
-        return this.id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    private String telephone;
 
-    public String getProvider_id() {
-        return this.provider_id;
-    }
+    private List<Tag> tags;
+    private List<Comment> comments;
 
-    public void setProvider_id(String provider_id) {
-        this.provider_id = provider_id;
-    }
 
-    public String getName() {
-        return this.name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
-    public Post() {
-    }
 
-    public Post(String id, @NotBlank String provider_id, String name) {
-        this.id = id;
-        this.provider_id = provider_id;
-        this.name = name;
-    }
 }
