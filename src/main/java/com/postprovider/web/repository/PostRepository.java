@@ -1,4 +1,15 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
+
 package com.postprovider.web.repository;
 
-public interface PostRepository {
+import com.postprovider.web.entity.Post;
+import java.io.Serializable;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface PostRepository extends MongoRepository<Post, Serializable> {
 }
