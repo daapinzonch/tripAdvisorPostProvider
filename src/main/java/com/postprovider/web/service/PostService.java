@@ -1,6 +1,7 @@
 package com.postprovider.web.service;
 
 
+import com.postprovider.web.entity.Comment;
 import com.postprovider.web.entity.Post;
 import com.postprovider.web.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,40 @@ public class PostService {
 
     public Post createPost(Post newPost){
         return postRepository.save(newPost);
+
+    }
+
+
+    public Post getPostById(String id){
+        return postRepository.getById(id);
+    }
+
+
+    public void updatePost(Post post) {
+        postRepository.save(post);
+    }
+
+    public void deletePostById(String id){
+        postRepository.deleteById(id);
+    }
+
+    public List<Post> findByServiceType(String type) {
+
+        return this.postRepository.findByServiceType(type);
+    }
+
+    public void addComment(String postId, String comment) {
+
+        Post post = getPostById(postId);
+        post.addComment(comment);
+        this.postRepository.save(post);
+
+    }
+
+    public List<Post> findByProviderId(String id) {
+
+        return this.postRepository.findByProviderId(id);
+
     }
 
 }

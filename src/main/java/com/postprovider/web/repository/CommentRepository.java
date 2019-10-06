@@ -6,9 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 
-
 @Repository
 public interface CommentRepository extends MongoRepository<Comment, Serializable> {
 
-
+    Comment save(Comment comment);
 }

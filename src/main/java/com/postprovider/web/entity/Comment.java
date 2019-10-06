@@ -12,15 +12,27 @@ import java.util.List;
 
 @Document( collection  = "Comment")
 @Data
-@AllArgsConstructor
+
 @NoArgsConstructor
 public class Comment implements Serializable {
 
     private String id;
     private String clientId;
     private String title;
-
     private String content;
     private Date date;
     private Short rating;
+
+    public Comment(String id, String clientId, String title, String content, Date date, Short rating) {
+        this.id = id;
+        this.clientId = clientId;
+        this.title = title;
+        this.content = content;
+        this.date = date;
+        this.rating = rating;
+    }
+
+
+
+
 }
