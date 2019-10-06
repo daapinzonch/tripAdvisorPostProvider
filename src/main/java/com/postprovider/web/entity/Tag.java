@@ -10,11 +10,14 @@ import java.io.Serializable;
 
 
 
-@Document(collection = "Tag")
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Tag implements Serializable {
+public class Tag {
+
+
+
 
 
 
