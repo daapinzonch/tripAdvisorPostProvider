@@ -11,8 +11,4 @@ import java.io.Serializable;
 public interface CommentRepository extends MongoRepository<Comment, Serializable> {
 
 
-
-
-
-
 }

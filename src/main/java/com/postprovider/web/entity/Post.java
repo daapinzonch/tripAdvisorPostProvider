@@ -37,10 +37,11 @@ public class Post implements Serializable {
     private String telephone;
 
     private List<Tag> tags;
-    private List<Comment> comments;
 
+    private List<String> commentIds;
 
-
-
+    public List<String> getCommentIds() {
+        return commentIds;
+    }
 
 }
