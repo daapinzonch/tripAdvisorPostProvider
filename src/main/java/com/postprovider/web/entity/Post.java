@@ -54,7 +54,10 @@ public class Post implements Serializable {
     }
 
     public void addComment(String postId) {
-
         commentIds.add(postId);
+    }
+
+    public void deleteComment(String postId) {
+        commentIds.remove(postId);
     }
 }

@@ -17,20 +17,19 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @GetMapping ("/ofPost/{id}")
+    @GetMapping ("/{id}")
     public List<Comment> getCommentsOfPost(@PathVariable ("id") String id){
-
         return this.commentService.getCommentsOfPostById(id);
-
-
     }
 
     @PutMapping ("/{postId}")
-    public String newComment(@PathVariable ("postId") String postId, @RequestBody Comment comment){
-
+    public String createComment(@PathVariable ("postId") String postId, @RequestBody Comment comment){
         return commentService.saveComment(postId, comment);
+    }
 
-
+    @DeleteMapping ("/")
+    public String deleteComment(@RequestParam String postId, @RequestParam String commentId){
+        return commentService.deleteComment(postId, commentId);
     }
 
 }

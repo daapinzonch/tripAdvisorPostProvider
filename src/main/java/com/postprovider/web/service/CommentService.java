@@ -3,7 +3,6 @@ package com.postprovider.web.service;
 import com.postprovider.web.entity.Comment;
 import com.postprovider.web.entity.Post;
 import com.postprovider.web.repository.CommentRepository;
-import com.postprovider.web.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,8 +51,10 @@ public class CommentService {
         return list;
     }
 
-    public void deleteCommentById(String id) {
-        commentRepository.deleteById(id);
+    public String deleteComment(String postId , String commentId) {
+        commentRepository.deleteById(commentId);
+        postService.deleteComment(postId, commentId);
+        return postId;
     }
 
 
@@ -61,10 +62,8 @@ public class CommentService {
     public List<Comment> getCommentsOfPostById(String post_id) {
 
         Post post = postService.getPostById(post_id);
-
         List<Comment> list = new ArrayList<>();
         if(post == null) return null;
-
         List<String> ids = post.getCommentIds();
         for (String id : ids) getById(id).ifPresent(comment -> list.add(comment));
         return list;

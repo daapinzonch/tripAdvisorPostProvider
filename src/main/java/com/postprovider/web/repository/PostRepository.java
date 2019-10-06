@@ -22,5 +22,6 @@ public interface PostRepository extends MongoRepository<Post, Serializable> {
     List<Post> findByServiceType(String serviceType);
     Post getById(String id);
     List<Post> findByProviderId(@NotBlank String providerId);
+    List<Post> findAllById(List<String> ids);
 
 }

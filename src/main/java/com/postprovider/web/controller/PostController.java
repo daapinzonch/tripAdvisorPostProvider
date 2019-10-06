@@ -15,7 +15,6 @@ import java.util.Optional;
 @RequestMapping("/posts")
 public class PostController{
 
-
     @Autowired
     private PostService postService;
 
@@ -25,11 +24,16 @@ public class PostController{
         return posts;
     }
 
-
     @GetMapping("/{id}")
     public Post getById(@PathVariable ("id") String id){
         Post post = this.postService.getPostById(id);
         return post;
+    }
+
+
+    @GetMapping("/reservation/")
+    public List<Post> getByIdList(@RequestParam List<String> ids){
+        return this.postService.getPostsByIds(ids);
     }
 
     @PostMapping
@@ -47,16 +51,13 @@ public class PostController{
         this.postService.deletePostById(postId);
     }
 
-
     @GetMapping ("/type/{type}")
-
     public List<Post> getByType(@PathVariable("type") String type){
 
         List<Post> posts = this.postService.findByServiceType(type);
         return posts;
 
     }
-
 
     @GetMapping ("/provider/{id}")
     public List<Post> getByProvider(@PathVariable("id") String id){
@@ -65,21 +66,6 @@ public class PostController{
         return posts;
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

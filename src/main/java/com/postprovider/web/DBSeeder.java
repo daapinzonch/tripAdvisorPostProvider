@@ -40,7 +40,7 @@ public class DBSeeder implements CommandLineRunner {
                 "111111",
                 "Madrid",
                 "3121546798",
-                Arrays.asList("0", "1"),
+                Arrays.asList(),
                 Arrays.asList(
                         new Tag("Comida", "Tiene comida"),
                         new Tag("Piscina", "Tiene piscina")
@@ -59,7 +59,7 @@ public class DBSeeder implements CommandLineRunner {
                 "111111",
                 "Madrid",
                 "3121546798",
-                Arrays.asList("0", "1"),
+                Arrays.asList(),
                 Arrays.asList(
                         new Tag("Sin escalas", "Vuelo directo sin escalas.")
                 )
@@ -76,7 +76,7 @@ public class DBSeeder implements CommandLineRunner {
                 "111111",
                 "Madrid",
                 "3121546798",
-                Arrays.asList("0", "1"),
+                Arrays.asList(),
                 Arrays.asList(
                         new Tag("Eléctrico", "Carro eléctrico."),
                         new Tag("GPS", "GPS integrado.")

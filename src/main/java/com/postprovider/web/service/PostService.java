@@ -1,7 +1,6 @@
 package com.postprovider.web.service;
 
 
-import com.postprovider.web.entity.Comment;
 import com.postprovider.web.entity.Post;
 import com.postprovider.web.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,36 +22,37 @@ public class PostService {
 
     //Paginacion de posts definida por el objeto pageable (no de pagina y tamano de pagina)
     public Page<Post> getAll(Pageable pageable){
-        return postRepository.findAll(pageable);
+        return this.postRepository.findAll(pageable);
     }
 
     //Obtener todos los posts en una lista
     public List<Post> getAll(){
-        return postRepository.findAll();
+        return this.postRepository.findAll();
     }
 
     //Obtener por un filtro definido por el objeto sort
     public List<Post> getByFilter(Sort sort){
-        return postRepository.findAll(sort);
+        return this.postRepository.findAll(sort);
     }
 
     public Post createPost(Post newPost){
-        return postRepository.save(newPost);
+
+        return this.postRepository.save(newPost);
 
     }
 
 
     public Post getPostById(String id){
-        return postRepository.getById(id);
+        return this.postRepository.getById(id);
     }
 
 
     public void updatePost(Post post) {
-        postRepository.save(post);
+        this.postRepository.save(post);
     }
 
     public void deletePostById(String id){
-        postRepository.deleteById(id);
+        this.postRepository.deleteById(id);
     }
 
     public List<Post> findByServiceType(String type) {
@@ -73,4 +74,23 @@ public class PostService {
 
     }
 
+    public void deleteComment(String postId, String commentId) {
+        Post post = this.getPostById(postId);
+        if(post== null) return;
+        post.deleteComment(commentId);
+
+    }
+
+    public List<Post> getPostsByIds(List<String> ids) {
+
+        List<Post> posts = new ArrayList<>();
+        for (String id :
+                ids) {
+            Post p = this.postRepository.getById(id);
+            if(p!= null)
+                posts.add(p);
+
+        }
+        return posts;
+    }
 }
