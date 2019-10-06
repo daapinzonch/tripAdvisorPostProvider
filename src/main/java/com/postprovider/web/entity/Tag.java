@@ -14,11 +14,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Tag {
-
-
-
-
-
-
+public class Tag implements Serializable {
+    private String imageUrl;
+    private String description;
 }

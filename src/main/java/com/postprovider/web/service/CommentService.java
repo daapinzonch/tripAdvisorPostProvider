@@ -18,24 +18,24 @@ public class CommentService {
     @Autowired
     private CommentRepository commentRepository;
 
-    public Comment saveComment(Comment comment){
+    public Comment saveComment(Comment comment) {
         return commentRepository.save(comment);
     }
 
-    public Optional<Comment> getById(String id){
+    public Optional<Comment> getById(String id) {
         return commentRepository.findById(id);
     }
 
-    public List<Comment> getCommentsOfPost(Post post){
+    public List<Comment> getCommentsOfPost(Post post) {
         List<Comment> list = new ArrayList<>();
         List<String> ids = post.getCommentIds();
-        for(String id : ids){
-            getById(id).ifPresent(comment->list.add(comment));
+        for (String id : ids) {
+            getById(id).ifPresent(comment -> list.add(comment));
         }
         return list;
     }
 
-    public void deleteCommentById(String id){
+    public void deleteCommentById(String id) {
         commentRepository.deleteById(id);
     }
 
