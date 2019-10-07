@@ -1,6 +1,7 @@
 package com.postprovider.web.controller;
 
 import com.postprovider.web.entity.Post;
+import com.postprovider.web.entity.Tag;
 import com.postprovider.web.service.PostService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -76,6 +77,22 @@ public class PostController{
         List<Post> posts = this.postService.findByProviderId(id);
         return posts;
 
+    }
+
+
+
+    @ApiOperation(value = "Adds a tag to a given Post by Id")
+    @PutMapping("/tag/{id}")
+    public void addTag(@RequestBody Tag tag, @PathVariable String postId){
+        this.postService.addTag(tag, postId);
+
+    }
+
+
+    @ApiOperation(value = "Removes a tag to a given Post by Id")
+    @DeleteMapping("/tag/{id}")
+    public void removeTag(@RequestBody Tag tag, @PathVariable String postId){
+        this.postService.addTag(tag, postId);
     }
 
 

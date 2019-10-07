@@ -2,6 +2,7 @@ package com.postprovider.web.service;
 
 
 import com.postprovider.web.entity.Post;
+import com.postprovider.web.entity.Tag;
 import com.postprovider.web.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,5 +93,25 @@ public class PostService {
 
         }
         return posts;
+    }
+
+    public void addTag(Tag tag, String postId) {
+
+        Post post = this.getPostById(postId);
+        if (post == null) return;
+
+        post.addTag(tag);
+        this.updatePost(post);
+
+    }
+
+    public void removeTag(Tag tag, String postId) {
+
+        Post post = this.getPostById(postId);
+        if (post == null) return;
+
+        post.removeTag(tag);
+        this.updatePost(post);
+
     }
 }

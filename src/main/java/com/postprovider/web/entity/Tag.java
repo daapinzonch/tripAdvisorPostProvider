@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
@@ -14,6 +15,8 @@ import java.util.Objects;
 
 @Data
 @NoArgsConstructor
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class Tag implements Serializable {
 
 
@@ -23,9 +26,7 @@ public class Tag implements Serializable {
     @NotBlank
     private String name;
 
-    public Tag(@NotBlank String description, @NotBlank String name) {
-        this.description = description;
-        this.name = name;
 
-    }
+
+
 }
