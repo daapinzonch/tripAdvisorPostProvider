@@ -6,9 +6,13 @@ import com.postprovider.web.service.CommentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -17,25 +21,52 @@ import java.util.List;
 @RequestMapping("/comments")
 public class CommentController {
 
-    @Autowired
     private CommentService commentService;
+
+    @Autowired
+    public CommentController(CommentService commentService) {
+        this.commentService = commentService;
+    }
 
     @ApiOperation(value = "Get all the comments of a given Post by its Id." , response = List.class)
     @GetMapping ("/{id}")
-    public List<Comment> getCommentsOfPost(@PathVariable ("id") String id){
-        return this.commentService.getCommentsOfPostById(id);
+    public ResponseEntity<List<Comment>> getCommentsOfPost(@PathVariable ("id") String id){
+        return ResponseEntity.ok(this.commentService.getCommentsOfPostById(id));
     }
 
     @ApiOperation(value = "Create and post a new comment of a given Post by its Id." , response = String.class)
     @PutMapping ("/{postId}")
-    public String createComment(@PathVariable ("postId") String postId, @RequestBody Comment comment){
-        return commentService.saveComment(postId, comment);
+    public ResponseEntity<String> createComment(@PathVariable ("postId") String postId, @RequestBody Comment comment){
+       try{
+            String commentId = commentService.saveComment(postId, comment);
+            if(commentId == null){
+                return new ResponseEntity<>( "-1" , HttpStatus.BAD_REQUEST);
+            }
+            else{
+                return new ResponseEntity<>( commentId , HttpStatus.CREATED);
+            }
+
+
+       }catch (Exception e){
+
+           return new ResponseEntity<>( e.toString()  , HttpStatus.FORBIDDEN);
+       }
+
     }
 
     @ApiOperation(value = "Delete a comment by Id, of a given Post by its Id." , response = String.class)
     @DeleteMapping ("/")
-    public String deleteComment(@RequestParam String postId, @RequestParam String commentId){
-        return commentService.deleteComment(postId, commentId);
+    public ResponseEntity<String> deleteComment(@RequestParam String postId, @RequestParam String commentId){
+        try{
+            String s = commentService.deleteComment(postId, commentId);
+            if( s== null){
+                return new ResponseEntity<>( commentId , HttpStatus.BAD_REQUEST);
+            }else{
+                return new ResponseEntity<>( commentId , HttpStatus.ACCEPTED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>( e.toString() , HttpStatus.FORBIDDEN);
+        }
     }
 
 }

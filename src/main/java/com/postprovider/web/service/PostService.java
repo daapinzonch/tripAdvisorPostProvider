@@ -18,8 +18,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostService {
 
-    @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    public PostService(PostRepository postRepository) {
+        this.postRepository = postRepository;
+    }
 
     //Paginacion de posts definida por el objeto pageable (no de pagina y tamano de pagina)
     public Page<Post> getAll(Pageable pageable){
@@ -48,12 +52,20 @@ public class PostService {
     }
 
 
-    public void updatePost(Post post) {
-        this.postRepository.save(post);
+    public Post updatePost(Post post) {
+        return this.postRepository.save(post);
     }
 
-    public void deletePostById(String id){
-        this.postRepository.deleteById(id);
+    public boolean deletePostById(String id){
+        int count = this.postRepository.countById(id);
+        if(count == 0){
+            return false;
+        }else{
+
+            this.postRepository.deleteById(id);
+            return true;
+        }
+
     }
 
     public List<Post> findByServiceType(String type) {
@@ -75,11 +87,11 @@ public class PostService {
 
     }
 
-    public void deleteComment(String postId, String commentId) {
+    public String deleteComment(String postId, String commentId) {
         Post post = this.getPostById(postId);
-        if(post== null) return;
+        if(post== null) return null;
         post.deleteComment(commentId);
-
+        return post.getId();
     }
 
     public List<Post> getPostsByIds(List<String> ids) {
@@ -95,23 +107,25 @@ public class PostService {
         return posts;
     }
 
-    public void addTag(Tag tag, String postId) {
+    public int addTag(Tag tag, String postId) {
 
         Post post = this.getPostById(postId);
-        if (post == null) return;
+        if (post == null) return -1;
 
-        post.addTag(tag);
+        int size = post.addTag(tag);
         this.updatePost(post);
+        return size;
 
     }
 
-    public void removeTag(Tag tag, String postId) {
+    public int removeTag(Tag tag, String postId) {
 
         Post post = this.getPostById(postId);
-        if (post == null) return;
+        if (post == null) return -1;
 
-        post.removeTag(tag);
+        int size = post.removeTag(tag);
         this.updatePost(post);
+        return size;
 
     }
 }

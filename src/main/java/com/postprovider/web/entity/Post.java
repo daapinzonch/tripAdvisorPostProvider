@@ -5,21 +5,17 @@ import com.sun.istack.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Id;
 import javax.validation.constraints.*;
 
 import lombok.*;
-import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
 
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
 @Document(collection = "Post")
 public class Post implements Serializable {
@@ -39,11 +35,11 @@ public class Post implements Serializable {
     private String serviceType;
 
     @DecimalMin(value = "-90.0", message = "Latitude must be between -90° and 90°")
-    @DecimalMin(value = "90.0", message = "Latitude must be between -90° and 90°")
+    @DecimalMax(value = "90.0", message = "Latitude must be between -90° and 90°")
     private Double latitude;
 
-    @DecimalMax(value = "0.0", message = "Longitude must be between 0° and 180°")
-    @DecimalMin(value = "180.0", message = "Longitude must be between 0° and 180°")
+    @DecimalMin(value = "0.0", message = "Longitude must be between 0° and 180°")
+    @DecimalMax(value = "180.0", message = "Longitude must be between 0° and 180°")
     private Double longitude;
 
     @NotBlank
@@ -61,9 +57,7 @@ public class Post implements Serializable {
     @PositiveOrZero
     private BigDecimal price;
 
-
     List<String> commentIds;
-
     private List<Tag> tags;
 
 
@@ -71,16 +65,19 @@ public class Post implements Serializable {
     public void addComment(String postId) {
         commentIds.add(postId);
     }
-
     public void deleteComment(String postId) {
         commentIds.remove(postId);
     }
 
-    public void addTag(Tag tag) {
+
+
+    public int addTag(Tag tag) {
         tags.add(tag);
+        return tags.size();
     }
 
-    public void removeTag(Tag tag) {
+    public int removeTag(Tag tag) {
         tags.remove(tag);
+        return tags.size();
     }
 }

@@ -15,19 +15,22 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CommentService {
 
-    @Autowired
     private CommentRepository commentRepository;
+    private PostService postService;
 
     @Autowired
-    private PostService postService;
+    public CommentService(CommentRepository commentRepository, PostService postService) {
+        this.commentRepository = commentRepository;
+        this.postService = postService;
+    }
 
 
     public String saveComment(String postId, Comment comment) {
 
 
-        String commentId = "-1";
+        String commentId;
         Post post = postService.getPostById(postId);
-        if( post == null ) return commentId;
+        if( post == null ) return null;
         Comment createdComment = commentRepository.save(comment);
         commentId = createdComment.getId();
         postService.addComment(postId , commentId);
@@ -42,18 +45,16 @@ public class CommentService {
 
     }
 
-    public List<Comment> getCommentsOfPost(Post post) {
-        List<Comment> list = new ArrayList<>();
-        List<String> ids = post.getCommentIds();
-        for (String id : ids) {
-            getById(id).ifPresent(comment -> list.add(comment));
-        }
-        return list;
-    }
+
 
     public String deleteComment(String postId , String commentId) {
+
+
+        String s = postService.deleteComment(postId, commentId);
+        if (s == null){
+            return null;
+        }
         commentRepository.deleteById(commentId);
-        postService.deleteComment(postId, commentId);
         return postId;
     }
 
@@ -65,7 +66,7 @@ public class CommentService {
         List<Comment> list = new ArrayList<>();
         if(post == null) return null;
         List<String> ids = post.getCommentIds();
-        for (String id : ids) getById(id).ifPresent(comment -> list.add(comment));
+        for (String id : ids) getById(id).ifPresent(list::add);
         return list;
     }
 }
