@@ -5,8 +5,12 @@ services:
   container_name: st-mongodb
   image: mongo
   restart: always
+  environment:
+   MONGO_INITDB_ROOT_USERNAME: root
+   MONGO_INITDB_ROOT_PASSWORD: example
   ports:
    - "27017:27017"
+  entrypoint: mongod --bind_ip_all true
   command: mongod --logpath=/dev/null # --quiet
 
  postprovider:
@@ -17,7 +21,7 @@ services:
    SPRING_PROFILES_ACTIVE: uat
    DATABASE: ta_db
    MONGODB_HOST: st-mongodb
-   MONGODB_PORT: 7777
+   MONGODB_PORT: 27017
    SERVER_PORT: 8088
    DATABASE: ta_db
   links:
