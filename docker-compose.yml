@@ -10,8 +10,8 @@ services:
    MONGO_INITDB_ROOT_PASSWORD: example
   ports:
    - "27017:27017"
-  entrypoint: mongod --bind_ip_all true
-  command: mongod --logpath=/dev/null # --quiet
+  entrypoint: mongod --bind_ip_all
+#  command: mongod --logpath=/dev/null # --quiet
 
  postprovider:
   build: .
@@ -22,7 +22,7 @@ services:
    DATABASE: ta_db
    MONGODB_HOST: st-mongodb
    MONGODB_PORT: 27017
-   SERVER_PORT: 8088
+   SERVER_PORT: 8080
    DATABASE: ta_db
   links:
    - st-mongodb
