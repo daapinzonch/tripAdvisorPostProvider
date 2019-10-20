@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class PostService {
         return this.postRepository.findAll(sort);
     }
 
-    public Post createPost(PostRequest postRequest){
+    public Post createPost(@Valid PostRequest postRequest){
         Post newPost = new Post(postRequest);
         return this.postRepository.save(newPost);
 
@@ -53,13 +54,14 @@ public class PostService {
     }
 
 
-    public Post updatePost(PostRequest postRequest) {
-        Post post = new Post(postRequest);
-        return this.postRepository.save(post);
-    }
 
-    private void updatePost(Post post) {
-        this.postRepository.save(post);
+    public Post updatePost(Post post) {
+
+        Post prevPost = getPostById(post.getId());
+        if(prevPost!=null) {
+            prevPost.updatePost(post);
+        }
+        return this.postRepository.save(prevPost);
     }
 
     public boolean deletePostById(String id){

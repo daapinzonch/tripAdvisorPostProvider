@@ -97,9 +97,9 @@ public class PostController{
     @PutMapping
     public ResponseEntity<String> updatePost(
             @ApiParam(value = "Post Object to be updated.")
-            @RequestBody @Valid PostRequest postRequest){
+            @RequestBody Post post){
         try {
-            Post p  = this.postService.updatePost(postRequest);
+            Post p  = this.postService.updatePost(post);
             if (p == null){
                 return new ResponseEntity<>( "-1" , HttpStatus.BAD_REQUEST);
             }

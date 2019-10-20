@@ -1,12 +1,12 @@
 package com.postprovider.web.entity;
 
 
-import com.sun.istack.NotNull;
+
 import lombok.Data;
 
 import javax.persistence.Id;
 import javax.validation.constraints.*;
-import java.util.Date;
+
 
 @Data
 public class CommentRequest {

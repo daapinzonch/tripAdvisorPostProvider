@@ -1,12 +1,12 @@
 package com.postprovider.web.entity;
 
-import com.sun.istack.NotNull;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
 import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Positive;
 import java.io.Serializable;

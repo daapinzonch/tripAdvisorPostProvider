@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,7 +69,7 @@ public class CommentService {
         Post post = postService.getPostById(post_id);
         List<Comment> list = new ArrayList<>();
         if(post == null) return null;
-        List<String> ids = post.getCommentIds();
+        HashSet<String> ids = post.getCommentIds();
         for (String id : ids) getById(id).ifPresent(list::add);
         return list;
     }
