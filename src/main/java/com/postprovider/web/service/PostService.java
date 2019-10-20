@@ -132,6 +132,5 @@ public class PostService {
         int size = post.removeTag(tag);
         this.updatePost(post);
         return size;
-
     }
 }

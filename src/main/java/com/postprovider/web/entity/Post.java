@@ -17,9 +17,27 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Document(collection = "Post")
 public class Post implements Serializable {
+
+    public Post(String id, String providerId, @Size(min = 1, max = 128, message = "Name must be between 1 and 128 characters") String name, @NotBlank String serviceType, @DecimalMin(value = "-90.0", message = "Latitude must be between -90° and 90°") @DecimalMax(value = "90.0", message = "Latitude must be between -90° and 90°") Double latitude, @DecimalMin(value = "0.0", message = "Longitude must be between 0° and 180°") @DecimalMax(value = "180.0", message = "Longitude must be between 0° and 180°") Double longitude, @NotBlank String address, @NotBlank String postalCode, @NotBlank String city, @NotBlank String telephone, String imageUrl, @PastOrPresent LocalDateTime timeStamp, @PositiveOrZero BigDecimal price, List<String> commentIds, List<Tag> tags) {
+        this.id = id;
+        this.providerId = providerId;
+        this.name = name;
+        this.serviceType = serviceType;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.city = city;
+        this.telephone = telephone;
+        this.imageUrl = imageUrl;
+        this.timeStamp = LocalDateTime.now();
+        this.price = price;
+        this.commentIds = commentIds;
+        this.tags = tags;
+    }
+
     @Id
     @NotNull
     private String id;
@@ -67,6 +85,8 @@ public class Post implements Serializable {
     @NotBlank
     private String telephone;
 
+    private String imageUrl;
+
     @PastOrPresent
     public LocalDateTime timeStamp;
 
@@ -74,6 +94,7 @@ public class Post implements Serializable {
     private BigDecimal price;
 
     List<String> commentIds;
+
     private List<Tag> tags;
 
 
