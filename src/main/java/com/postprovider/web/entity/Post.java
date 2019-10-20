@@ -56,7 +56,8 @@ public class Post implements Serializable {
         this.timeStamp = LocalDateTime.now();
         this.price = postRequest.getPrice();
         this.commentIds = new ArrayList<>();
-        this.tags = new ArrayList<>();
+        this.commentIds = postRequest.getCommentIds() != null ? postRequest.getCommentIds() : new ArrayList<>();
+        this.tags = postRequest.getTags() != null ? postRequest.getTags(): new ArrayList<>();
     }
 
     @NotNull

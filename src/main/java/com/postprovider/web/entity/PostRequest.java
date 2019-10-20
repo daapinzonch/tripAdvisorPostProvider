@@ -44,6 +44,7 @@ public class PostRequest {
 
 
     private List<Tag> tags;
+    private List<String> commentIds;
 
 
 
