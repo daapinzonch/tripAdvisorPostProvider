@@ -1,6 +1,7 @@
 package com.postprovider.web.controller;
 
 import com.postprovider.web.entity.Post;
+import com.postprovider.web.entity.PostRequest;
 import com.postprovider.web.entity.Tag;
 import com.postprovider.web.service.PostService;
 import io.swagger.annotations.Api;
@@ -20,6 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/posts")
 @Api(value="PostProvider", produces = "application/json")
+@CrossOrigin(origins = "*")
 public class PostController{
 
     private PostService postService;
@@ -76,9 +78,9 @@ public class PostController{
     @PostMapping
     public ResponseEntity<String> createPost(
             @ApiParam(value = "Post Object to be created")
-            @RequestBody @Valid Post post){
+            @RequestBody @Valid PostRequest postRequest){
         try{
-            Post p  = this.postService.createPost(post);
+            Post p  = this.postService.createPost(postRequest);
             if (p == null){
                 return new ResponseEntity<>( "-1" , HttpStatus.BAD_REQUEST);
             }
@@ -95,9 +97,9 @@ public class PostController{
     @PutMapping
     public ResponseEntity<String> updatePost(
             @ApiParam(value = "Post Object to be updated.")
-            @RequestBody @Valid Post post){
+            @RequestBody @Valid PostRequest postRequest){
         try {
-            Post p  = this.postService.updatePost(post);
+            Post p  = this.postService.updatePost(postRequest);
             if (p == null){
                 return new ResponseEntity<>( "-1" , HttpStatus.BAD_REQUEST);
             }

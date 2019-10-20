@@ -2,6 +2,7 @@ package com.postprovider.web.service;
 
 
 import com.postprovider.web.entity.Post;
+import com.postprovider.web.entity.PostRequest;
 import com.postprovider.web.entity.Tag;
 import com.postprovider.web.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -40,8 +41,8 @@ public class PostService {
         return this.postRepository.findAll(sort);
     }
 
-    public Post createPost(Post newPost){
-
+    public Post createPost(PostRequest postRequest){
+        Post newPost = new Post(postRequest);
         return this.postRepository.save(newPost);
 
     }
@@ -52,8 +53,13 @@ public class PostService {
     }
 
 
-    public Post updatePost(Post post) {
+    public Post updatePost(PostRequest postRequest) {
+        Post post = new Post(postRequest);
         return this.postRepository.save(post);
+    }
+
+    private void updatePost(Post post) {
+        this.postRepository.save(post);
     }
 
     public boolean deletePostById(String id){

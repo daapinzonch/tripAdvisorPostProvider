@@ -2,6 +2,7 @@ package com.postprovider.web.controller;
 
 
 import com.postprovider.web.entity.Comment;
+import com.postprovider.web.entity.CommentRequest;
 import com.postprovider.web.service.CommentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Api(value="Comments", produces = "application/json", description = "Comments made by the users associated to the provider posts.")
 @RequestMapping("/comments")
+@CrossOrigin(origins = "*")
 public class CommentController {
 
     private CommentService commentService;
@@ -41,9 +43,9 @@ public class CommentController {
             @ApiParam(value = "Post's ID in which the comment will be submitted.")
             @PathVariable ("postId") String postId,
             @ApiParam(value = "Comment to be added.")
-            @RequestBody Comment comment){
+            @RequestBody CommentRequest commentRequest){
        try{
-            String commentId = commentService.saveComment(postId, comment);
+            String commentId = commentService.saveComment(postId, commentRequest);
             if(commentId == null){
                 return new ResponseEntity<>( "-1" , HttpStatus.BAD_REQUEST);
             }

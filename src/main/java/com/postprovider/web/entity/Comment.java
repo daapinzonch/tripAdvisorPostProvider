@@ -10,6 +10,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Positive;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Date;
 
 
@@ -39,5 +40,12 @@ public class Comment implements Serializable {
     @Positive
     private Short rating;
 
+    public Comment(CommentRequest commentRequest) {
 
+        this.clientId = commentRequest.getClientId();
+        this.title = commentRequest.getTitle();
+        this.content = commentRequest.getContent();
+        this.date = Date.from(Instant.now());
+        this.rating = commentRequest.getRating();
+    }
 }

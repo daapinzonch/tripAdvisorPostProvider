@@ -1,6 +1,7 @@
 package com.postprovider.web.service;
 
 import com.postprovider.web.entity.Comment;
+import com.postprovider.web.entity.CommentRequest;
 import com.postprovider.web.entity.Post;
 import com.postprovider.web.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,12 +26,14 @@ public class CommentService {
     }
 
 
-    public String saveComment(String postId, Comment comment) {
+    public String saveComment(String postId, CommentRequest commentRequest) {
 
 
         String commentId;
         Post post = postService.getPostById(postId);
         if( post == null ) return null;
+
+        Comment comment = new Comment(commentRequest);
         Comment createdComment = commentRepository.save(comment);
         commentId = createdComment.getId();
         postService.addComment(postId , commentId);

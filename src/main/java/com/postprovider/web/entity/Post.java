@@ -5,6 +5,7 @@ import com.sun.istack.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Id;
 import javax.validation.constraints.*;
@@ -24,6 +25,21 @@ public class Post implements Serializable {
     private String id;
 
 
+    public Post(PostRequest postRequest) {
+        this.providerId = postRequest.getProviderId();
+        this.name = postRequest.getName();
+        this.serviceType = postRequest.getServiceType();
+        this.latitude = postRequest.getLatitude();
+        this.longitude = postRequest.getLongitude();
+        this.address = postRequest.getAddress();
+        this.postalCode = postRequest.getPostalCode();
+        this.city = postRequest.getCity();
+        this.telephone = postRequest.getTelephone();
+        this.timeStamp = LocalDateTime.now();
+        this.price = postRequest.getPrice();
+        this.commentIds = new ArrayList<>();
+        this.tags = new ArrayList<>();
+    }
 
     @NotNull
     private String providerId;
