@@ -36,6 +36,8 @@ public class PostRequest {
     private String postalCode;
     private String city;
     private String telephone;
+    private String description;
+    private String imageUrl;
 
     @PositiveOrZero
     private BigDecimal price;

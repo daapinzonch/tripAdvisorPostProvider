@@ -21,7 +21,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "Post")
 public class Post implements Serializable {
 
-    public Post(@NotNull String id, @NotNull String providerId, @Size(min = 1, max = 128, message = "Name must be between 1 and 128 characters") String name, @NotBlank String serviceType, @DecimalMin(value = "-90.0", message = "Latitude must be between -90° and 90°") @DecimalMax(value = "90.0", message = "Latitude must be between -90° and 90°") Double latitude, @DecimalMin(value = "0.0", message = "Longitude must be between 0° and 180°") @DecimalMax(value = "180.0", message = "Longitude must be between 0° and 180°") Double longitude, @NotBlank String address, @NotBlank String postalCode, @NotBlank String city, @NotBlank String telephone, String imageUrl, LocalDateTime timeStamp, @NotNull @PositiveOrZero BigDecimal price, HashSet<String> commentIds, HashSet<Tag> tags) {
+    public Post(@NotNull String id, @NotNull String providerId, @Size(min = 1, max = 128, message = "Name must be between 1 and 128 characters") String name, @NotBlank String serviceType, @DecimalMin(value = "-90.0", message = "Latitude must be between -90° and 90°") @DecimalMax(value = "90.0", message = "Latitude must be between -90° and 90°") Double latitude, @DecimalMin(value = "0.0", message = "Longitude must be between 0° and 180°") @DecimalMax(value = "180.0", message = "Longitude must be between 0° and 180°") Double longitude, @NotBlank String address, @NotBlank String postalCode, @NotBlank String city, @NotBlank String telephone, String imageUrl,String description, LocalDateTime timeStamp, @NotNull @PositiveOrZero BigDecimal price, HashSet<String> commentIds, HashSet<Tag> tags) {
         this.id = id;
         this.providerId = providerId;
         this.name = name;
@@ -37,6 +37,7 @@ public class Post implements Serializable {
         this.price = price;
         this.commentIds = commentIds;
         this.tags = tags;
+        this.description = description;
     }
 
     public void updatePost(Post updatedPost) {
@@ -85,6 +86,8 @@ public class Post implements Serializable {
         this.price = postRequest.getPrice();
         this.commentIds = postRequest.getCommentIds() != null ? postRequest.getCommentIds() : new HashSet<>();
         this.tags = postRequest.getTags() != null ? postRequest.getTags(): new HashSet<>();
+        this.description = postRequest.getDescription();
+        this.imageUrl = postRequest.getImageUrl();
     }
 
 
@@ -115,6 +118,7 @@ public class Post implements Serializable {
     @NotBlank
     private String telephone;
     private String imageUrl;
+    private String description;
     public LocalDateTime timeStamp;
 
     @NotNull
